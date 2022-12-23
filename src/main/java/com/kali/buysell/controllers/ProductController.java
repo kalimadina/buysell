@@ -1,6 +1,7 @@
 package com.kali.buysell.controllers;
 
 
+import com.kali.buysell.models.Image;
 import com.kali.buysell.models.Product;
 import com.kali.buysell.services.ProductServise;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,8 +32,11 @@ public class ProductController {
     }
 
     @PostMapping("/product/create")
-    public String createProduct(Product product) {
-        productServise.saveProduct(product);
+    public String createProduct(@PathVariable("file1") MultipartFile file1,
+                                @PathVariable("file2") MultipartFile file2,
+                                @PathVariable("file3") MultipartFile file3,
+                                Product product) throws IOException {
+        productServise.saveProduct(product, file1, file2, file3);
         return "redirect:/";
     }
 
